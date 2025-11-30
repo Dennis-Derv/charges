@@ -87,6 +87,16 @@
       line-height:1.55;
       font-size:0.97rem;
     }
+    .table-responsive {
+  width: 100%;
+  overflow-x: auto; /* allows horizontal scroll on small screens */
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+}
+
+.table-responsive table {
+  min-width: 600px; /* ensures table doesn’t shrink too much */
+}
+
   </style>
 </head>
 <body>
@@ -132,53 +142,56 @@
         </div>
       </section>
 
-      <section aria-labelledby="pricing-table">
-        <h2 id="pricing-table">Pricing Table</h2>
-        <table role="table" aria-label="Pricing breakdown">
-          <thead>
-            <tr>
-              <th>Item</th>
-              <th>Initial (6 months)</th>
-              <th>Renewal (6 months)</th>
-              <th>Billing Cycle</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Domain Name</td>
-              <td>₦150,000</td>
-              <td>₦150,000</td>
-              <td>Every 6 months</td>
-            </tr>
-            <tr>
-              <td>Web Hosting</td>
-              <td>₦200,000</td>
-              <td>₦150,000</td>
-              <td>Every 6 months</td>
-            </tr>
-            <tr>
-              <td>SSL Certificate</td>
-              <td>₦50,000</td>
-              <td>₦40,000</td>
-              <td>Every 6 months</td>
-            </tr>
-            <tr>
-              <td>Video Calling</td>
-              <td>$40 (monthly)</td>
-              <td>$40 (monthly)</td>
-              <td>Monthly</td>
-            </tr>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td>Total (first 6 months)</td>
-              <td>₦400,000 + $40/month</td>
-              <td>₦340,000 + $40/month</td>
-              <td>See billing cycle</td>
-            </tr>
-          </tfoot>
-        </table>
-      </section>
+<section aria-labelledby="pricing-table">
+  <h2 id="pricing-table">Pricing Table</h2>
+  <div class="table-responsive">
+    <table role="table" aria-label="Pricing breakdown">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Initial (6 months)</th>
+          <th>Renewal (6 months)</th>
+          <th>Billing Cycle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Domain Name</td>
+          <td>₦150,000</td>
+          <td>₦150,000</td>
+          <td>Every 6 months</td>
+        </tr>
+        <tr>
+          <td>Web Hosting</td>
+          <td>₦200,000</td>
+          <td>₦150,000</td>
+          <td>Every 6 months</td>
+        </tr>
+        <tr>
+          <td>SSL Certificate</td>
+          <td>₦50,000</td>
+          <td>₦40,000</td>
+          <td>Every 6 months</td>
+        </tr>
+        <tr>
+          <td>Video Calling</td>
+          <td>$40 (monthly)</td>
+          <td>$40 (monthly)</td>
+          <td>Monthly</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td>Total (first 6 months)</td>
+          <td>₦400,000 + $40/month</td>
+          <td>₦340,000 + $40/month</td>
+          <td>See billing cycle</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
 
       <!-- ⭐ Closing Assurance Section ⭐ -->
       <div class="closing">
