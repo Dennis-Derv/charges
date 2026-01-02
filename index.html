@@ -167,6 +167,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Service Website Cost Breakdown</title>
 
   <style>
@@ -224,12 +225,50 @@
       font-size: 18px;
       font-weight: bold;
       text-align: right;
+      background-color: #f0f3f7;
     }
 
     .note {
       background: #eef3f8;
       padding: 15px;
       border-left: 4px solid #2c3e50;
+    }
+
+    /* ---------- Mobile Responsiveness ---------- */
+    @media (max-width: 768px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 10px;
+        background: #fafafa;
+      }
+
+      td {
+        border: none;
+        padding: 8px 0;
+      }
+
+      td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: block;
+        margin-bottom: 3px;
+        color: #2c3e50;
+      }
+
+      .total {
+        text-align: left;
+      }
     }
   </style>
 </head>
@@ -246,72 +285,77 @@
     </p>
 
     <table>
-      <tr>
-        <th>Item</th>
-        <th>Cost (₦)</th>
-        <th>Why This Is Necessary</th>
-      </tr>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Cost (₦)</th>
+          <th>Why This Is Necessary</th>
+        </tr>
+      </thead>
 
-      <tr>
-        <td>Website Hosting</td>
-        <td class="price">₦80,000</td>
-        <td>
-          Hosting keeps your website online 24/7.
-          It ensures fast loading speed, good performance, and reliability for visitors.
-        </td>
-      </tr>
+      <tbody>
+        <tr>
+          <td data-label="Item">Website Hosting</td>
+          <td data-label="Cost">₦80,000</td>
+          <td data-label="Why">
+            Hosting keeps your website online 24/7 and ensures speed,
+            stability, and reliability for visitors.
+          </td>
+        </tr>
 
-      <tr>
-        <td>Domain Name</td>
-        <td class="price">₦35,000</td>
-        <td>
-          The domain is your website’s unique address on the internet
-          and gives your business a professional and trusted identity.
-        </td>
-      </tr>
+        <tr>
+          <td data-label="Item">Domain Name</td>
+          <td data-label="Cost">₦35,000</td>
+          <td data-label="Why">
+            The domain is your website’s address and gives your business
+            a professional online identity.
+          </td>
+        </tr>
 
-      <tr>
-        <td>SSL Certificate</td>
-        <td class="price">₦20,000</td>
-        <td>
-          SSL protects user data, enables HTTPS,
-          builds customer trust, and is required for search engine ranking.
-        </td>
-      </tr>
+        <tr>
+          <td data-label="Item">SSL Certificate</td>
+          <td data-label="Cost">₦20,000</td>
+          <td data-label="Why">
+            SSL secures user data, enables HTTPS,
+            improves trust, and supports SEO.
+          </td>
+        </tr>
 
-      <tr>
-        <td>Premium Plugins & Tools</td>
-        <td class="price">₦40,000</td>
-        <td>
-          These tools provide security, backups, performance optimization,
-          contact forms, and advanced website functionality.
-        </td>
-      </tr>
+        <tr>
+          <td data-label="Item">Premium Plugins & Tools</td>
+          <td data-label="Cost">₦40,000</td>
+          <td data-label="Why">
+            Provides security, backups, performance optimization,
+            forms, and advanced features.
+          </td>
+        </tr>
 
-      <tr>
-        <td>Setup, Configuration & Maintenance Buffer</td>
-        <td class="price">₦25,000</td>
-        <td>
-          Covers professional setup, configuration, and testing,
-         to ensure smooth operation.
-        </td>
-      </tr>
+        <tr>
+          <td data-label="Item">Setup, Configuration & Maintenance</td>
+          <td data-label="Cost">₦25,000</td>
+          <td data-label="Why">
+            Covers professional setup, configuration, testing,
+            and smooth operation.
+          </td>
+        </tr>
 
-      <tr>
-        <td colspan="3" class="total">
-          Total Cost: ₦200,000
-        </td>
-      </tr_toggle>
+        <tr>
+          <td colspan="3" class="total">
+            Total Cost: ₦200,000
+          </td>
+        </tr>
+      </tbody>
     </table>
 
     <div class="note">
-      <strong>Important:</strong> The total cost reflects not just tools,
-      but professional setup, security, stability, and long-term reliability
-      required for a service website.
+      <strong>Important:</strong> This cost includes infrastructure,
+      security, professional setup, and long-term reliability for a
+      serious service website.
     </div>
 
   </div>
 
 </body>
 </html>
+
 
