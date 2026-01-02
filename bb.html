@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Okafor Chukwuebuka Uche - Resume</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+       body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .button-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .download-btn {
+            background: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-btn:hover {
+            background: #27ae60;
+        }
+
+        #resume {
+            /* background: white; */
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            line-height: 1.6;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            /* border-bottom: 3px solid #e0e0e0; */
+            padding-bottom: 20px;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .location {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .contact {
+            color: #888;
+            font-size: 13px;
+            word-spacing: 20px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            /* background: #e8e8e8; */
+            padding: 10px 15px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+        }
+
+        .objective {
+            color: #555;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .education-item,
+        .experience-item,
+        .skill-group {
+            margin-bottom: 15px;
+        }
+
+        .item-title {
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .item-subtitle {
+            color: #888;
+            font-size: 13px;
+            font-style: italic;
+            margin-bottom: 5px;
+        }
+
+        .item-date {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .item-description {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-left: 15px;
+        }
+
+        ul {
+            margin-left: 20px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .skill-item {
+            color: #555;
+            font-size: 13px;
+            padding: 8px 12px;
+            /* background: #f9f9f9; */
+            border-radius: 4px;
+            /* border-left: 3px solid #d0d0d0; */
+        }
+
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .button-container {
+                display: none;
+            }
+
+            #resume {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+            }
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="button-container">
+            <button class="download-btn" onclick="downloadPDF()">📥 Download as PDF (A4)</button>
+        </div>
+
+        <div id="resume">
+            <div class="header">
+                <div class="name">Okafor Chukwuebuka Uche</div>
+                <div class="location">Anambra State, Nigeria</div>
+                <div class="contact">
+                    Email: uchebukas@gmail.com | Phone: 08066517162
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">OBJECTIVE</div>
+                <div class="objective">
+                    Detail-oriented Industrial Physics graduate with strong analytical and technical skills seeking a challenging role in engineering. Adept at applying physics principles, conducting measurements, and performing quality control to support projects in microwave engineering, surveying, and quality control.
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">EDUCATION</div>
+                <div class="education-item">
+                    <div class="item-title">B.Sc. Industrial Physics</div>
+                    <div class="item-subtitle">Chukwuemeka Odumegwu Ojukwu University, Uli Campus</div>
+                    <div class="item-date">November 2022</div>
+                    <div class="item-description">Final Year Project: Effects of Electromagnetic Fields on the Human Body</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">RELEVANT SKILLS</div>
+                <div class="skills-grid">
+                    <div class="skill-item">Electromagnetic Theory & Instrumentation</div>
+                    <div class="skill-item">Data Analysis & Measurement Techniques</div>
+                    <div class="skill-item">Technical Problem-Solving</div>
+                    <div class="skill-item">Surveying Tools & Methods</div>
+                    <div class="skill-item">Quality Control Procedures</div>
+                    <div class="skill-item">Strong Documentation Skills</div>
+                    <div class="skill-item">Team Collaboration</div>
+                    <div class="skill-item">Project Management</div>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">WORK EXPERIENCE</div>
+                <div class="experience-item">
+                    <div class="item-title">Survey & Valuation Assistant</div>
+                    <div class="item-subtitle">Self/with Chike Muoneme & Partners</div>
+                    <div class="item-date">2021 – Present</div>
+                    <ul>
+                        <li>Assisted in surveying land and preparing valuations for estate projects</li>
+                        <li>Collected and analyzed measurement data using standard surveying instruments</li>
+                        <li>Assisted in project documentation and report preparation</li>
+                        <li>Collaborated with engineers and surveyors to ensure accuracy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section">
+                <div class="section-title">PROJECTS & ACHIEVEMENTS</div>
+                <ul>
+                    <li>Final year project on Electromagnetic Field Effects, demonstrating research, data collection, and analysis skills</li>
+                    <li>Assisted in multiple surveying and valuation projects with high accuracy</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <div class="section-title">PROFESSIONAL ATTRIBUTES</div>
+                <ul>
+                    <li>Strong analytical thinking and problem-solving</li>
+                    <li>Quick learner, adaptable to new technologies</li>
+                    <li>Excellent communication and teamwork skills</li>
+                    <li>Highly organized and attentive to detail</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function downloadPDF() {
+            const element = document.getElementById('resume');
+            const opt = { 
+                margin: 10,
+                filename: 'Okafor_Chukwuebuka_Uche.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+</body>
+</html>
