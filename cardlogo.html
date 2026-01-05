@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Spin to Win Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#137fec",
+              "background-light": "#f6f7f8",
+              "background-dark": "#101922",
+              "wheel-red": "#EF4444",
+              "wheel-green": "#10B981", 
+              "wheel-orange": "#F97316",
+              "wheel-purple": "#8B5CF6",
+              "wheel-gold": "#F59E0B",
+            },
+            fontFamily: {
+              "display": ["Lexend"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            boxShadow: {
+                'glow': '0 0 20px rgba(19, 127, 236, 0.5)',
+                'inner-depth': 'inset 0 2px 10px rgba(0,0,0,0.3)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 24;
+        }
+        @keyframes idleSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .animate-idle {
+            animation: idleSpin 20s linear infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display h-screen flex flex-col">
+<header class="sticky top-0 z-20 flex items-center bg-background-light/80 dark:bg-background-dark/80 p-4 pb-2 justify-between backdrop-blur-sm border-b border-zinc-200 dark:border-zinc-800">
+<div class="flex size-12 shrink-0 items-center justify-start">
+<button class="flex items-center justify-center p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors">
+<span class="material-symbols-outlined text-black dark:text-white" style="font-size: 24px;">arrow_back_ios_new</span>
+</button>
+</div>
+<h2 class="text-black dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Spin to Unlock Promo</h2>
+<div class="flex size-12 shrink-0 items-center justify-end">
+<button class="text-zinc-500 dark:text-zinc-400">
+<span class="material-symbols-outlined" style="font-size: 24px;">help</span>
+</button>
+</div>
+</header>
+<main class="flex-grow relative flex flex-col items-center justify-center p-4 w-full max-w-md mx-auto">
+<div class="text-center mb-8 relative z-10">
+<h1 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-500 mb-2">
+                Feeling Lucky?
+            </h1>
+<p class="text-zinc-600 dark:text-zinc-400 text-sm">
+                Spin the wheel for a chance to win <span class="font-bold text-primary">25% OFF</span> your course!
+            </p>
+</div>
+<div class="relative size-[320px] mb-10">
+<div class="absolute -top-7 left-1/2 -translate-x-1/2 z-20 pointer-events-none drop-shadow-lg filter">
+<svg fill="none" height="50" viewBox="0 0 40 50" width="40" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 50L0 12H40L20 50Z" fill="url(#gold-gradient-pointer)"></path>
+<path d="M20 50L0 12H40L20 50Z" fill="url(#gold-shimmer)" fill-opacity="0.3"></path>
+<defs>
+<linearGradient id="gold-gradient-pointer" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0%" stop-color="#FCD34D"></stop>
+<stop offset="50%" stop-color="#F59E0B"></stop>
+<stop offset="100%" stop-color="#D97706"></stop>
+</linearGradient>
+<linearGradient id="gold-shimmer" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#FFFFFF"></stop>
+<stop offset="100%" stop-color="#FFFFFF" stop-opacity="0"></stop>
+</linearGradient>
+</defs>
+</svg>
+</div>
+<div class="w-full h-full rounded-full border-[8px] border-[#F59E0B] shadow-2xl shadow-primary/20 bg-white dark:bg-zinc-800 relative overflow-hidden box-border">
+<svg class="w-full h-full animate-idle" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<path d="M 50,50 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" id="tp-r42"></path>
+<path d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0" id="tp-r35"></path>
+<path d="M 50,50 m -28,0 a 28,28 0 1,1 56,0 a 28,28 0 1,1 -56,0" id="tp-r28"></path>
+<path d="M 50,50 m -21,0 a 21,21 0 1,1 42,0 a 21,21 0 1,1 -42,0" id="tp-r21"></path>
+<path d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" id="tp-r40"></path>
+<path d="M 50,50 m -32,0 a 32,32 0 1,1 64,0 a 32,32 0 1,1 -64,0" id="tp-r32"></path>
+<path d="M 50,50 m -24,0 a 24,24 0 1,1 48,0 a 24,24 0 1,1 -48,0" id="tp-r24"></path>
+<path d="M 50,50 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0" id="tp-r38"></path>
+<radialGradient cx="0.5" cy="0.5" id="gold-hub" r="0.5">
+<stop offset="0%" stop-color="#FCD34D"></stop>
+<stop offset="100%" stop-color="#F59E0B"></stop>
+</radialGradient>
+</defs>
+<g>
+<path d="M 50 50 L 50 0 A 50 50 0 0 1 93.3 25 L 50 50" fill="#10B981" stroke="white" stroke-width="0.5"></path>
+<path d="M 50 50 L 93.3 25 A 50 50 0 0 1 93.3 75 L 50 50" fill="#8B5CF6" stroke="white" stroke-width="0.5"></path>
+<path d="M 50 50 L 93.3 75 A 50 50 0 0 1 50 100 L 50 50" fill="#10B981" stroke="white" stroke-width="0.5"></path>
+<path d="M 50 50 L 50 100 A 50 50 0 0 1 6.7 75 L 50 50" fill="#EF4444" stroke="white" stroke-width="0.5"></path>
+<path d="M 50 50 L 6.7 75 A 50 50 0 0 1 6.7 25 L 50 50" fill="#F97316" stroke="white" stroke-width="0.5"></path>
+<path d="M 50 50 L 6.7 25 A 50 50 0 0 1 50 0 L 50 50" fill="#EF4444" stroke="white" stroke-width="0.5"></path>
+</g>
+<g transform="rotate(30 50 50)">
+<text dominant-baseline="middle" fill="white" font-family="Lexend" font-weight="800" text-anchor="middle">
+<textPath font-size="8" href="#tp-r38" startOffset="25%">25%</textPath>
+<textPath font-size="6" href="#tp-r28" startOffset="25%">OFF</textPath>
+</text>
+</g>
+<g transform="rotate(90 50 50)">
+<text dominant-baseline="middle" fill="white" font-family="Lexend" font-weight="700" letter-spacing="0.5" text-anchor="middle">
+<textPath font-size="3.5" href="#tp-r42" startOffset="25%">BETTER</textPath>
+<textPath font-size="3.5" href="#tp-r35" startOffset="25%">LUCK</textPath>
+<textPath font-size="3.5" href="#tp-r28" startOffset="25%">NEXT</textPath>
+<textPath font-size="3.5" href="#tp-r21" startOffset="25%">TIME</textPath>
+</text>
+</g>
+<g transform="rotate(150 50 50)">
+<text dominant-baseline="middle" fill="white" font-family="Lexend" font-weight="800" text-anchor="middle">
+<textPath font-size="8" href="#tp-r38" startOffset="25%">25%</textPath>
+<textPath font-size="6" href="#tp-r28" startOffset="25%">OFF</textPath>
+</text>
+</g>
+<g transform="rotate(210 50 50)">
+<text dominant-baseline="middle" fill="white" font-family="Lexend" font-weight="800" text-anchor="middle">
+<textPath font-size="6.5" href="#tp-r38" startOffset="25%">TRY</textPath>
+<textPath font-size="6.5" href="#tp-r28" startOffset="25%">AGAIN</textPath>
+</text>
+</g>
+<g transform="rotate(270 50 50)">
+<text dominant-baseline="middle" fill="white" font-family="Lexend" font-weight="800" text-anchor="middle">
+<textPath font-size="4.5" href="#tp-r40" startOffset="25%">Oops!</textPath>
+<textPath font-size="5.5" href="#tp-r32" startOffset="25%">YOU</textPath>
+<textPath font-size="5" href="#tp-r24" startOffset="25%">MISSED</textPath>
+</text>
+</g>
+<g transform="rotate(330 50 50)">
+<text dominant-baseline="middle" fill="white" font-family="Lexend" font-weight="800" text-anchor="middle">
+<textPath font-size="6.5" href="#tp-r38" startOffset="25%">TRY</textPath>
+<textPath font-size="6.5" href="#tp-r28" startOffset="25%">AGAIN</textPath>
+</text>
+</g>
+<circle class="shadow-lg" cx="50" cy="50" fill="url(#gold-hub)" r="12" stroke="#FFF" stroke-width="1.5"></circle>
+<text class="animate-pulse" dominant-baseline="central" fill="white" font-family="Material Symbols Outlined" font-size="14" text-anchor="middle" x="50" y="50">stars</text>
+</svg>
+</div>
+<div class="absolute -bottom-4 left-1/2 -translate-x-1/2 w-48 h-4 bg-black/20 dark:bg-black/50 blur-lg rounded-[100%]"></div>
+</div>
+<div class="w-full max-w-xs space-y-4">
+<button class="w-full relative group overflow-hidden rounded-xl bg-gradient-to-b from-primary to-blue-600 p-1 shadow-lg shadow-blue-500/30 transition-all hover:scale-[1.02] active:scale-[0.98]">
+<div class="absolute inset-0 bg-white/20 group-hover:bg-white/10 transition-colors"></div>
+<div class="relative flex flex-col items-center justify-center rounded-[10px] bg-primary px-8 py-4">
+<span class="text-2xl font-black uppercase tracking-wide text-white drop-shadow-sm">Spin Now!</span>
+<span class="text-xs font-medium text-blue-100 uppercase tracking-widest mt-0.5">1 Free Spin Available</span>
+</div>
+</button>
+<div class="pt-4 text-center">
+<button class="text-zinc-500 dark:text-zinc-400 font-medium text-sm flex items-center justify-center gap-2 mx-auto hover:text-zinc-800 dark:hover:text-zinc-200 transition-colors">
+<span>View My Promo Codes</span>
+<span class="material-symbols-outlined text-lg">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+<div class="fixed top-20 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+<div class="fixed bottom-0 right-0 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+
+</body></html>

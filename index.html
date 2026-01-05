@@ -16,6 +16,11 @@
       padding: 20px;
       color: #333;
     }
+.strike {
+  text-decoration: line-through;
+  color: #999;
+  opacity: 0.7;
+}
 
     .container {
       max-width: 900px;
@@ -155,9 +160,9 @@
         </tr>
 
         <tr>
-          <td data-label="Service">Backend Development</td>
-          <td data-label="Cost" class="price">₦100,000</td>
-          <td data-label="Description">
+          <td data-label="Service" class="strike">Backend Development</td>
+          <td data-label="Cost" class="price strike">₦100,000</td>
+          <td data-label="Description" class="strike">
             Server logic, database integration, APIs, authentication,
             and system functionality.
           </td>
@@ -174,7 +179,7 @@
 
         <tr>
           <td colspan="3" class="total">
-            Development Subtotal: ₦300,000
+            Development Subtotal: ₦200,000
           </td>
         </tr>
       </tbody>
@@ -244,7 +249,7 @@
     </table>
 
     <div class="note">
-      <strong>Total Estimated Project Cost:</strong> ₦500,000  
+      <strong>Total Estimated Project Cost:</strong> ₦400,000  
       (Development + Infrastructure)
     </div>
 
