@@ -1,165 +1,222 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Certificate Generator — Frontend Developer Course</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<style>
-  /* =========================
+  <!-- Google Fonts: Great Vibes for signature -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap"
+    rel="stylesheet">
+  <style>
+    /* =========================
      THEME VARIABLES
-  ========================== */
-  :root{
-    --primary:#4da3ff;
-    --secondary:#d4af37;
-    --paper:#0b1c2d;          /* deep navy */
-    --paper-alt:#102a43;      /* slightly lighter navy */
-    --text-main:#e6f0ff;
-    --text-muted:#9fb3c8;
-  }
+    ========================== */
+    :root {
+      --primary: #4da3ff;
+      --secondary: #d4af37;
+      --paper: #0b1c2d;
+      /* deep navy */
+      --paper-alt: #102a43;
+      /* slightly lighter navy */
+      --text-main: #e6f0ff;
+      --text-muted: #9fb3c8;
+    }
 
-  /* =========================
+    /* =========================
      BASE PAGE
-  ========================== */
-  body{
-    background:#0f172a;
-    color:#e5e7eb;
-    font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
-  }
+    ========================== */
+    /* set body margin 0 to avoid default 8px whitespace affecting PDF */
+    body {
+      margin: 0;
+      background: #0f172a;
+      color: #e5e7eb;
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, Arial;
+    }
 
-  pre{
-    font-size:12px;
-    color:#475569;
-  }
+    pre {
+      font-size: 12px;
+      color: #475569;
+    }
 
-  /* =========================
-     CERTIFICATE CARD
-  ========================== */
-  .card-certificate{
-    background:linear-gradient(180deg,var(--paper),var(--paper-alt));
-    border:8px double rgba(212,175,55,0.35);
-    padding:36px;
-    border-radius:14px;
-    position:relative;
-    overflow:hidden;
-    color:var(--text-main);
-    box-shadow:0 25px 60px rgba(0,0,0,0.55);
-  }
+    /* PDF root - exact A4 landscape */
+    #pdfRoot {
+      width: 297mm;
+      height: 210mm;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* keep page content centered if you render it on screen */
+    }
 
-  /* =========================
+    /* =========================
+     CERTIFICATE CARD (A4 exact)
+    ========================== */
+    .card-certificate {
+      background: linear-gradient(135deg, #0b1c2d 0%, #1a3c5e 100%);
+      border: 4px solid #d4af37;
+      padding: 52px 62px;
+      position: relative;
+      overflow: hidden;
+      color: var(--text-main);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 12px #0b1c2d;
+
+      /* EXACT A4 LANDSCAPE DIMENSIONS (use mm to match jsPDF) */
+      width: 297mm;
+      /* Full A4 width */
+      height: 210mm;
+      /* Full A4 height */
+      max-width: 297mm;
+      max-height: 210mm;
+      box-sizing: border-box;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Inner decorative border */
+    .card-certificate::before {
+      content: "";
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      right: 20px;
+      bottom: 20px;
+      border: 2px solid rgba(212, 175, 55, 0.5);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* =========================
      BACKGROUND PATTERN
-  ========================== */
-  .guilloche{
-    position:absolute;
-    inset:0;
-    opacity:0.15;
-    pointer-events:none;
-    background-image:
-      radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
-    background-size:26px 26px;
-  }
+    ========================== */
+    .guilloche {
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+      background-size: 26px 26px;
+    }
 
-  /* =========================
+    /* =========================
      LOGO
-  ========================== */
-  .logo-circle{
-    width:72px;
-    height:72px;
-    border-radius:50%;
-    background:rgba(77,163,255,0.15);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:34px;
-    color:#7cc4ff;
-    box-shadow:0 0 0 6px rgba(77,163,255,0.08);
-  }
+    ========================== */
+    .logo-circle {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(77, 163, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 34px;
+      color: #7cc4ff;
+      box-shadow: 0 0 0 6px rgba(77, 163, 255, 0.08);
+    }
 
-  /* =========================
+    .logo-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    /* =========================
      HEADINGS & TEXT
-  ========================== */
-  .card-certificate h1,
-  .card-certificate h3,
-  .card-certificate h4{
-    color:#f8fafc;
-  }
+    ========================== */
+    .card-certificate h1,
+    .card-certificate h3,
+    .card-certificate h4 {
+      color: #f8fafc;
+    }
 
-  .card-certificate .text-muted{
-    color:var(--text-muted) !important;
-  }
+    .card-certificate .text-muted {
+      color: var(--text-muted) !important;
+    }
 
-  .card-certificate hr{
-    border-color:rgba(212,175,55,0.6);
-  }
+    .card-certificate hr {
+      border-color: rgba(212, 175, 55, 0.6);
+    }
 
-  /* =========================
+    /* =========================
      SIGNATURE
-  ========================== */
-  .signature{
-    font-family:'Georgia',serif;
-    font-size:34px;
-    color:#f5e6b3;
-  }
-
-  /* gold divider lines inside certificate */
-  .card-certificate div[style*="background:#cbd5e1"]{
-    background:rgba(212,175,55,0.6) !important;
-  }
-
-  /* =========================
-     BUTTONS (minor polish)
-  ========================== */
-  .btn-primary{
-    background:#2563eb;
-    border-color:#2563eb;
-  }
-
-  .btn-primary:hover{
-    background:#1d4ed8;
-    border-color:#1d4ed8;
-  }
-  .logo-circle img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  border-radius:50%;
-  background:#fff;
-}
-
-  /* =========================
-     PRINT STYLES
-  ========================== */
-  @media print{
-    body{
-      background:#fff !important;
-      color:#000 !important;
+    ========================== */
+    .signature {
+      font-family: 'Great Vibes', cursive;
+      font-size: 42px;
+      color: #d4af37;
+      line-height: 1;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    body *{
-      visibility:hidden;
+    /* gold divider lines inside certificate */
+    .card-certificate div[style*="background:#cbd5e1"] {
+      background: rgba(212, 175, 55, 0.6) !important;
     }
 
-    .card-certificate,
-    .card-certificate *{
-      visibility:visible;
+    /* =========================
+     PRINT STYLES / @page
+    ========================== */
+    @page {
+      size: A4 landscape;
+      margin: 0;
     }
 
-    .card-certificate{
-      position:absolute;
-      left:0;
-      top:0;
-      width:100%;
-      box-shadow:none;
-      border-color:#bfa14a;
-    }
-  }
-</style>
+    @media print {
 
+      html,
+      body {
+        width: 297mm;
+        height: 210mm;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      body * {
+        visibility: hidden;
+      }
+
+      #pdfRoot,
+      #pdfRoot * {
+        visibility: visible;
+      }
+
+      #pdfRoot {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 297mm;
+        height: 210mm;
+      }
+
+      #pdfRoot {
+        page-break-after: avoid;
+        page-break-before: avoid;
+        page-break-inside: avoid;
+      }
+
+      #pdfRoot {
+        overflow: hidden;
+      }
+    }
+  </style>
 </head>
+
 <body>
   <div class="container py-5">
     <div class="row g-4">
+      <!-- LEFT COLUMN (controls) -->
       <div class="col-md-4">
         <div class="p-3 bg-white rounded shadow-sm">
           <h5>Create certificate</h5>
@@ -212,49 +269,68 @@
         </div>
       </div>
 
+      <!-- RIGHT COLUMN (preview + pdf root) -->
       <div class="col-md-8">
         <div class="d-flex justify-content-end mb-3 gap-2">
-          <button id="downloadPdf" type="button" class="btn btn-primary btn-sm"><span class="me-1">⬇️</span> Download PDF</button>
+          <button id="downloadPdf" type="button" class="btn btn-primary btn-sm"><span class="me-1">⬇️</span> Download
+            PDF</button>
           <button id="printBtn" type="button" class="btn btn-outline-secondary btn-sm">🖨️ Print</button>
         </div>
 
-        <div id="certificateCard" class="card-certificate mb-3">
-          <div class="guilloche"></div>
-          <div class="text-center">
-            <div id="logoImg" class="logo-circle mx-auto mb-2">
-              <!-- <span id="logoIcon">🏫</span> -->
-               <img src="https://bf405b85al.ufs.sh/f/PjFaqcYM62U3EbVQvu62Cn8XSKN9FrtBE5VHx1IvPbq7flwT" alt="" id="logoIcon">
-            </div>
-            <h3 id="platformTitle" class="mb-1 text-uppercase">Academy/Dennis-Digital-Hub</h3>
-            <hr style="width:120px;border-top:3px solid var(--secondary);margin:8px auto 20px">
-
-            <p class="small text-muted mb-1">Certificate of Completion</p>
-            <p class="small text-muted fst-italic">This is to certify that</p>
-
-            <h1 id="studentName" class="text-secondary" style="font-family:'Georgia',serif;font-size:40px;margin:12px 0">Joheobe Jaden Ominyi</h1>
-            <div style="height:2px;width:200px;background:#e2e8f0;margin:8px auto"></div>
-
-            <p class="small text-muted mt-3 mb-1">has successfully completed the course</p>
-            <h4 id="courseName" class="mb-3">Frontend Web Developement</h4>
-
-            <div class="row mt-4">
-              <div class="col-6 text-center">
-                <div id="instructorSign" class="signature">Dennis Lovelyn</div>
-                <div style="height:1px;background:#cbd5e1;margin:8px 0"></div>
-                <div class="small text-muted">Instructor</div>
+        <!-- PDF root wrapper (we generate PDF from this element only) -->
+        <div id="pdfRoot">
+          <div id="certificateCard" class="card-certificate mb-3" role="document" aria-label="Certificate">
+            <div class="guilloche"></div>
+            <div class="text-center" style="z-index:2">
+              <div id="logoImg" class="logo-circle mx-auto mb-3">
+                <img src="https://bf405b85al.ufs.sh/f/PjFaqcYM62U3EbVQvu62Cn8XSKN9FrtBE5VHx1IvPbq7flwT" alt=""
+                  id="logoIcon">
               </div>
-              <div class="col-6 text-center">
-                <div id="issueDate" class="mb-2">January 12, 2026</div>
-                <div style="height:1px;background:#cbd5e1;margin:8px 0"></div>
-                <div class="small text-muted">Date Issued</div>
-              </div>
-            </div>
 
-            <div class="d-flex justify-content-between align-items-end mt-4">
-              <div class="small text-muted">ID: CRT-2026-0001-FE</div>
-              <div class="small text-muted"> 
-                <!-- <a href="http://127.0.0.1:5500/verify.html?cert=CRT-2026-0001-FE" style="text-decoration: none;">Verify Certificate</a>  -->
-              <a href="https://digital-services-virid.vercel.app/verify.html?cert=CRT-2026-0001-FE">Verify Certificate</a>
+              <h3 id="platformTitle" class="mb-2 text-uppercase"
+                style="letter-spacing: 2px; font-weight: 600; font-size: 2.5rem;">
+                Academy/Dennis-Digital-Hub
+              </h3>
+
+              <hr style="width:200px;border-top:3px solid var(--secondary);opacity:1;margin:10px auto 20px">
+
+              <p class="small text-muted mb-2" style="font-size: 1.3rem;">Certificate of Completion</p>
+              <p class="small text-muted fst-italic" style="font-size: 1.3rem;">This is to certify that</p>
+
+              <h1 id="studentName" class="text-white"
+                style="font-family:'Playfair Display', serif; font-size:72px; margin:20px 0; font-weight: 700; text-shadow: 0 4px 6px rgba(0,0,0,0.2);">
+                Joheobe Jaden Ominyi
+              </h1>
+
+              <div
+                style="height:3px;width:340px;background:linear-gradient(90deg, transparent, #d4af37, transparent);margin:12px auto">
+              </div>
+
+              <p class="small text-muted mt-4 mb-3 text-uppercase" style="letter-spacing: 1.5px; font-size: 1.2rem;">has
+                successfully completed the course</p>
+
+              <h4 id="courseName" class="mb-4" style="font-size:38px; font-weight:300; color: #e6f0ff;">Frontend Web
+                Developement</h4>
+
+              <div class="row mt-1 align-items-end">
+                <div class="col-6 text-center">
+                  <div id="instructorSign" class="signature">Dennis Lovelyn</div>
+                  <div style="height:1px;background:#cbd5e1;margin:8px 0"></div>
+                  <div class="small text-muted">Instructor</div>
+                </div>
+                <div class="col-6 text-center">
+                  <div id="issueDate" class="mb-2">January 12, 2026</div>
+                  <div style="height:1px;background:#cbd5e1;margin:8px 0"></div>
+                  <div class="small text-muted">Date Issued</div>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-end mt-2">
+                <div class="small text-muted">ID: CRT-2026-0001-FE</div>
+                <div class="small text-muted">
+                  <a href="https://digital-services-virid.vercel.app/verify.html?cert=CRT-2026-0001-FE"
+                    style="color:inherit;text-decoration:underline">Verify Certificate</a>
+                </div>
               </div>
             </div>
           </div>
@@ -265,252 +341,273 @@
     </div>
   </div>
 
-  <!-- html2pdf for download -->
+  <!-- html2pdf (download) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
   <!-- Bootstrap bundle (optional JS) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script>
-window.addEventListener('DOMContentLoaded', () => {
-  try {
-    console.log('certificate script loaded');
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      try {
+        // DOM references
+        const platformEl = document.getElementById('platform');
+        const logoEl = document.getElementById('logo');
+        const instructorEl = document.getElementById('instructor');
+        const studentEl = document.getElementById('student');
+        const courseEl = document.getElementById('course');
+        const dateEl = document.getElementById('date');
 
-    // Data store
-    const STORAGE_KEY = 'certificates_v1';
-    let certificates = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const generateBtn = document.getElementById('generateBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const savedList = document.getElementById('savedList');
+        const clearStorage = document.getElementById('clearStorage');
 
-    // DOM references
-    const platformEl = document.getElementById('platform');
-    const logoEl = document.getElementById('logo');
-    const instructorEl = document.getElementById('instructor');
-    const studentEl = document.getElementById('student');
-    const courseEl = document.getElementById('course');
-    const dateEl = document.getElementById('date');
+        const platformTitle = document.getElementById('platformTitle');
+        const logoWrap = document.getElementById('logoImg');
+        const studentName = document.getElementById('studentName');
+        const courseName = document.getElementById('courseName');
+        const instructorSign = document.getElementById('instructorSign');
+        const issueDate = document.getElementById('issueDate');
+        const certificateCard = document.getElementById('certificateCard');
+        const pdfRoot = document.getElementById('pdfRoot');
 
-    const generateBtn = document.getElementById('generateBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const savedList = document.getElementById('savedList');
-    const clearStorage = document.getElementById('clearStorage');
-
-    const platformTitle = document.getElementById('platformTitle');
-    const logoWrap = document.getElementById('logoImg');
-    const studentName = document.getElementById('studentName');
-    const courseName = document.getElementById('courseName');
-    const instructorSign = document.getElementById('instructorSign');
-    const issueDate = document.getElementById('issueDate');
-    const certificateCard = document.getElementById('certificateCard');
-
-    function escapeHtml(str){
-      if(!str) return '';
-      return String(str)
-        .replace(/&/g,'&amp;')
-        .replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;')
-        .replace(/'/g,'&#39;');
-    }
-
-    function renderCertificate(data){
-      platformTitle.textContent = data.platform || 'Platform Name';
-      studentName.textContent = data.student || 'Recipient Name';
-      courseName.textContent = data.course || 'Course Title';
-      instructorSign.textContent = data.instructor || 'Instructor';
-      issueDate.textContent = data.date || new Date().toLocaleDateString();
-
-      // logo handling
-      if (data.logo){
-        logoWrap.innerHTML = '';
-        const img = document.createElement('img');
-        img.src = data.logo;
-        img.alt = data.platform || 'logo';
-        img.style.width = '100%'; img.style.height = '100%'; img.style.objectFit='cover';
-        img.onerror = () => { logoWrap.innerHTML = '<span id="logoIcon">🏫</span>'; };
-        logoWrap.appendChild(img);
-      } else {
-        logoWrap.innerHTML = '<span id="logoIcon">🏫</span>';
-      }
-    }
-
-    function saveCertificates(){
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(certificates));
-      renderSavedList();
-    }
-
-    function renderSavedList(){
-      savedList.innerHTML = '';
-      if (!certificates.length){
-        const li=document.createElement('li');
-        li.className='list-group-item text-muted small';
-        li.textContent='No saved certificates yet.';
-        savedList.appendChild(li);
-        return;
-      }
-      certificates.forEach((c, idx) => {
-        const li=document.createElement('li');
-        li.className='list-group-item d-flex justify-content-between align-items-center';
-
-        const left=document.createElement('div'); left.className='d-flex align-items-center gap-2';
-        const imgWrap=document.createElement('div');
-        Object.assign(imgWrap.style, {width:'36px',height:'36px',borderRadius:'50%',overflow:'hidden',display:'flex',alignItems:'center',justifyContent:'center',background:'#f1f5f9'});
-
-        if (c.logo){
-          const im=document.createElement('img');
-          im.src=c.logo;
-          im.style.width='100%'; im.style.height='100%'; im.style.objectFit='cover';
-          im.onerror=()=>{ imgWrap.textContent='🏫'; };
-          imgWrap.appendChild(im);
-        } else {
-          imgWrap.textContent='🏫';
+        function escapeHtml(str) {
+          if (!str) return '';
+          return String(str)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
         }
 
-        const txt=document.createElement('div');
-        txt.innerHTML=`<div class='small fw-semibold'>${escapeHtml(c.student||c.platform||'Untitled')}</div><div class='small text-muted'>${escapeHtml(c.course||'')}</div>`;
-        left.appendChild(imgWrap); left.appendChild(txt);
+        function renderCertificate(data) {
+          platformTitle.textContent = data.platform || 'Platform Name';
+          studentName.textContent = data.student || 'Recipient Name';
+          courseName.textContent = data.course || 'Course Title';
+          instructorSign.textContent = data.instructor || 'Instructor';
+          issueDate.textContent = data.date || new Date().toLocaleDateString();
 
-        const right=document.createElement('div');
-        const previewBtn=document.createElement('button');
-        previewBtn.type='button'; previewBtn.className='btn btn-sm btn-outline-primary me-1';
-        previewBtn.textContent='Preview'; previewBtn.dataset.idx=idx;
-        const delBtn=document.createElement('button');
-        delBtn.type='button'; delBtn.className='btn btn-sm btn-outline-danger';
-        delBtn.textContent='Delete'; delBtn.dataset.idx=idx;
+          // logo handling
+          if (data.logo) {
+            logoWrap.innerHTML = '';
+            const img = document.createElement('img');
+            img.src = data.logo;
+            img.alt = data.platform || 'logo';
+            img.style.width = '100%'; img.style.height = '100%'; img.style.objectFit = 'cover';
+            img.onerror = () => { logoWrap.innerHTML = '<span id="logoIcon">🏫</span>'; };
+            logoWrap.appendChild(img);
+          } else {
+            logoWrap.innerHTML = '<span id="logoIcon">🏫</span>';
+          }
+        }
 
-        right.appendChild(previewBtn); right.appendChild(delBtn);
+        // minimal saved certificates logic preserved for UI
+        const STORAGE_KEY = 'certificates_v1';
+        let certificates = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
 
-        li.appendChild(left); li.appendChild(right); savedList.appendChild(li);
+        function saveCertificates() {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(certificates));
+          renderSavedList();
+        }
 
-        previewBtn.addEventListener('click', () => {
-          const data = certificates[idx];
-          platformEl.value = data.platform||'';
-          logoEl.value = data.logo||'';
-          instructorEl.value = data.instructor||'';
-          studentEl.value = data.student||'';
-          courseEl.value = data.course||'';
-          dateEl.value = data.date||'';
+        function renderSavedList() {
+          savedList.innerHTML = '';
+          if (!certificates.length) {
+            const li = document.createElement('li');
+            li.className = 'list-group-item text-muted small';
+            li.textContent = 'No saved certificates yet.';
+            savedList.appendChild(li);
+            return;
+          }
+          certificates.forEach((c, idx) => {
+            const li = document.createElement('li');
+            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+            const left = document.createElement('div'); left.className = 'd-flex align-items-center gap-2';
+            const imgWrap = document.createElement('div');
+            Object.assign(imgWrap.style, { width: '36px', height: '36px', borderRadius: '50%', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f1f5f9' });
+
+            if (c.logo) {
+              const im = document.createElement('img');
+              im.src = c.logo;
+              im.style.width = '100%'; im.style.height = '100%'; im.style.objectFit = 'cover';
+              im.onerror = () => { imgWrap.textContent = '🏫'; };
+              imgWrap.appendChild(im);
+            } else {
+              imgWrap.textContent = '🏫';
+            }
+
+            const txt = document.createElement('div');
+            txt.innerHTML = `<div class='small fw-semibold'>${escapeHtml(c.student || c.platform || 'Untitled')}</div><div class='small text-muted'>${escapeHtml(c.course || '')}</div>`;
+            left.appendChild(imgWrap); left.appendChild(txt);
+
+            const right = document.createElement('div');
+            const previewBtn = document.createElement('button');
+            previewBtn.type = 'button'; previewBtn.className = 'btn btn-sm btn-outline-primary me-1';
+            previewBtn.textContent = 'Preview'; previewBtn.dataset.idx = idx;
+            const delBtn = document.createElement('button');
+            delBtn.type = 'button'; delBtn.className = 'btn btn-sm btn-outline-danger';
+            delBtn.textContent = 'Delete'; delBtn.dataset.idx = idx;
+
+            right.appendChild(previewBtn); right.appendChild(delBtn);
+
+            li.appendChild(left); li.appendChild(right); savedList.appendChild(li);
+
+            previewBtn.addEventListener('click', () => {
+              const data = certificates[idx];
+              platformEl.value = data.platform || '';
+              logoEl.value = data.logo || '';
+              instructorEl.value = data.instructor || '';
+              studentEl.value = data.student || '';
+              courseEl.value = data.course || '';
+              dateEl.value = data.date || '';
+              renderCertificate(data);
+            });
+
+            delBtn.addEventListener('click', () => {
+              certificates.splice(idx, 1);
+              saveCertificates();
+            });
+          });
+        }
+
+        // generate / save handlers
+        generateBtn.addEventListener('click', () => {
+          const data = {
+            platform: platformEl.value.trim(),
+            logo: logoEl.value.trim(),
+            instructor: instructorEl.value.trim(),
+            student: studentEl.value.trim(),
+            course: courseEl.value.trim(),
+            date: dateEl.value.trim()
+          };
           renderCertificate(data);
         });
 
-        delBtn.addEventListener('click', () => {
-          certificates.splice(idx,1);
+        saveBtn.addEventListener('click', () => {
+          const data = {
+            platform: platformEl.value.trim(),
+            logo: logoEl.value.trim(),
+            instructor: instructorEl.value.trim(),
+            student: studentEl.value.trim(),
+            course: courseEl.value.trim(),
+            date: dateEl.value.trim()
+          };
+          if (!data.student || !data.course) {
+            alert('Please provide at least a student name and course name before saving.');
+            return;
+          }
+          certificates.unshift(data);
           saveCertificates();
+          alert('Saved to list');
         });
-      });
-    }
 
-    // Event handlers
-    generateBtn.addEventListener('click', () => {
-      const data = {
-        platform: platformEl.value.trim(),
-        logo: logoEl.value.trim(),
-        instructor: instructorEl.value.trim(),
-        student: studentEl.value.trim(),
-        course: courseEl.value.trim(),
-        date: dateEl.value.trim()
-      };
-      renderCertificate(data);
-    });
+        clearStorage.addEventListener('click', () => {
+          if (!confirm('Clear all saved certificates?')) return;
+          certificates = []; saveCertificates();
+        });
 
-    saveBtn.addEventListener('click', () => {
-      const data = {
-        platform: platformEl.value.trim(),
-        logo: logoEl.value.trim(),
-        instructor: instructorEl.value.trim(),
-        student: studentEl.value.trim(),
-        course: courseEl.value.trim(),
-        date: dateEl.value.trim()
-      };
-      if(!data.student || !data.course){
-        alert('Please provide at least a student name and course name before saving.');
-        return;
+        // DOWNLOAD PDF — use pdfRoot as source and force single A4 landscape page
+        document.getElementById('downloadPdf').addEventListener('click', () => {
+          if (typeof html2pdf === 'undefined') {
+            alert('PDF export library not loaded. Check your network or CDN.');
+            return;
+          }
+
+          const studentFileName = (studentEl.value || 'certificate').replace(/ /g, '_');
+
+          const opt = {
+            margin: 0,
+            filename: studentFileName + '.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: {
+              scale: 3,
+              useCORS: true,
+              backgroundColor: null
+            },
+            jsPDF: {
+              unit: 'mm',
+              format: [297, 210],
+              orientation: 'landscape'
+            },
+            pagebreak: {
+              mode: ['avoid-all']
+            }
+          };
+
+          // Use the pdfRoot element so only the certificate area is rendered
+          html2pdf().set(opt).from(pdfRoot).save();
+        });
+
+        // Print — clone certificate into new window (keeps print styling)
+        document.getElementById('printBtn').addEventListener('click', () => {
+          const printWindow = window.open('', '_blank', 'noopener');
+          if (!printWindow) { alert('Popup blocked. Allow popups for this site to print.'); return; }
+
+          const doc = printWindow.document;
+          doc.open();
+          doc.close();
+
+          const meta = doc.createElement('meta');
+          meta.setAttribute('charset', 'utf-8');
+
+          const title = doc.createElement('title');
+          title.textContent = 'Print certificate';
+
+          doc.head.appendChild(meta);
+          doc.head.appendChild(title);
+
+          doc.body.style.margin = '0';
+          doc.body.style.padding = '0';
+          doc.body.style.background = '#fff';
+
+          // copy styles
+          const head = printWindow.document.head;
+          document.querySelectorAll('link[rel="stylesheet"], style').forEach(node => {
+            try { head.appendChild(node.cloneNode(true)); } catch (e) { }
+          });
+
+          const clone = certificateCard.cloneNode(true);
+          clone.querySelectorAll('button,input,textarea,a').forEach(el => el.remove());
+          // ensure sizing in print window: wrap into same pdfRoot dimensions
+          const wrapper = doc.createElement('div');
+          wrapper.style.width = '297mm';
+          wrapper.style.height = '210mm';
+          wrapper.style.margin = '0';
+          wrapper.style.padding = '0';
+          wrapper.appendChild(clone);
+          doc.body.appendChild(wrapper);
+
+          const doPrint = () => {
+            try { printWindow.focus(); printWindow.print(); } catch (err) { console.error('Print failed', err); }
+          };
+          printWindow.onload = () => setTimeout(doPrint, 150);
+          setTimeout(() => { if (!printWindow.closed) doPrint(); }, 600);
+        });
+
+        // init render
+        renderSavedList();
+        if (!certificates.length) {
+          const example = {
+            platform: 'Apex Academy',
+            logo: '',
+            instructor: 'Dr. Sarah West',
+            student: 'Alex Morgan',
+            course: 'Frontend Developer — Advanced',
+            date: 'October 24, 2025'
+          };
+          renderCertificate(example);
+        } else {
+          renderCertificate(certificates[0]);
+        }
+      } catch (err) {
+        console.error('Top-level script error:', err);
+        alert('Script failed to start — open devtools console to see the error.');
       }
-      certificates.unshift(data); saveCertificates(); alert('Saved to list');
     });
-
-    clearStorage.addEventListener('click', () => {
-      if(!confirm('Clear all saved certificates?')) return;
-      certificates=[]; saveCertificates();
-    });
-
-    document.getElementById('downloadPdf').addEventListener('click', () => {
-      if (typeof html2pdf === 'undefined'){
-        alert('PDF export library not loaded. Check your network or CDN.');
-        return;
-      }
-      const studentFileName = (studentEl.value || 'certificate').replace(/ /g, '_');
-      const opt = {
-        margin: 10,
-        filename: studentFileName + '.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'landscape' }
-      };
-      html2pdf().set(opt).from(certificateCard).save();
-    });
-
-    // Safe print: clone node and open in new window without document.write of outerHTML
-    document.getElementById('printBtn').addEventListener('click', () => {
-      const printWindow = window.open('', '_blank', 'noopener');
-      if(!printWindow){ alert('Popup blocked. Allow popups for this site to print.'); return; }
-
-const doc = printWindow.document;
-
-doc.open();
-doc.close();
-
-const meta = doc.createElement('meta');
-meta.setAttribute('charset', 'utf-8');
-
-const title = doc.createElement('title');
-title.textContent = 'Print certificate';
-
-doc.head.appendChild(meta);
-doc.head.appendChild(title);
-
-doc.body.style.margin = '0';
-doc.body.style.padding = '24px';
-doc.body.style.background = '#fff';
-
-
-      // copy styles
-      const head = printWindow.document.head;
-      document.querySelectorAll('link[rel="stylesheet"], style').forEach(node => {
-        try { head.appendChild(node.cloneNode(true)); } catch(e) {}
-      });
-
-      const clone = certificateCard.cloneNode(true);
-      clone.querySelectorAll('button,input,textarea,a').forEach(el => el.remove());
-      printWindow.document.body.appendChild(clone);
-
-      const doPrint = () => {
-        try { printWindow.focus(); printWindow.print(); } catch(err) { console.error('Print failed', err); }
-      };
-      // If the new window finishes loading, trigger print. Fallback call after 600ms.
-      printWindow.onload = () => setTimeout(doPrint, 150);
-      setTimeout(() => { if(!printWindow.closed) doPrint(); }, 600);
-    });
-
-    // init render
-    renderSavedList();
-    if(!certificates.length){
-      const example = {
-        platform: 'Apex Academy',
-        logo: '',
-        instructor: 'Dr. Sarah West',
-        student: 'Alex Morgan',
-        course: 'Frontend Developer — Advanced',
-        date: 'October 24, 2025'
-      };
-      renderCertificate(example);
-    } else {
-      renderCertificate(certificates[0]);
-    }
-
-  } catch (err) {
-    console.error('Top-level script error:', err);
-    alert('Script failed to start — open devtools console to see the error.');
-  }
-});
-</script>
+  </script>
 
 </body>
+
 </html>
