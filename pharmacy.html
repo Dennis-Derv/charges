@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MedRx Pharmacy OS - B2B Pitch Presentation Deck</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #0d9488;          /* Teal */
+      --secondary: #1e3a8a;        /* Deep Navy Blue */
+      --accent: #10b981;           /* Emerald Green */
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #0f172a;
+      --text-muted: #475569;
+      --border: #e2e8f0;
+      --radius: 16px;
+      --shadow: 0 10px 25px -5px rgba(30, 58, 138, 0.08);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    header h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 36px;
+      color: var(--secondary);
+      margin-bottom: 10px;
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Presentation Deck Shell */
+    .deck-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    /* Interactive Slide Visual Preview */
+    .slide-viewer {
+      background: #0f172a;
+      color: white;
+      border-radius: var(--radius);
+      padding: 60px;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 40px -10px rgba(15, 23, 42, 0.3);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: var(--transition);
+    }
+
+    .slide-viewer::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(13,148,136,0.1) 0%, rgba(30,58,138,0.15) 50%, rgba(0,0,0,0) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      padding-bottom: 20px;
+    }
+
+    .slide-logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .slide-logo span {
+      color: var(--accent);
+    }
+
+    .slide-num {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .slide-body {
+      z-index: 2;
+      margin: 40px 0;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .slide-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.25;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .slide-content-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    @media (min-width: 768px) {
+      .slide-content-layout.two-cols {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .slide-text-content {
+      font-size: 16px;
+      color: #e2e8f0;
+    }
+
+    .slide-bullets {
+      list-style: none;
+    }
+
+    .slide-bullets li {
+      position: relative;
+      padding-left: 28px;
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .slide-bullets li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 800;
+      font-size: 18px;
+    }
+
+    .slide-visual-mockup {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px dashed rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 200px;
+    }
+
+    .slide-visual-mockup h4 {
+      font-family: 'Outfit', sans-serif;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 2;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+
+    /* Controls Bar */
+    .controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      padding: 16px 30px;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .control-btn {
+      background: var(--secondary);
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .control-btn:hover {
+      background: var(--primary);
+    }
+
+    .control-btn:disabled {
+      background: #cbd5e1;
+      cursor: not-allowed;
+    }
+
+    /* Metadata Panel below slide */
+    .metadata-panel {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .meta-section {
+      margin-bottom: 24px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .meta-section:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+
+    .meta-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      color: var(--secondary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .meta-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .speaker-notes-content {
+      background: #f1f5f9;
+      padding: 18px;
+      border-left: 4px solid var(--primary);
+      border-radius: 4px;
+      font-style: italic;
+    }
+
+    /* Summary / Guidelines Section */
+    .guidelines-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 40px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+
+    .guidelines-card h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      color: var(--secondary);
+      margin-bottom: 20px;
+    }
+
+    .guidelines-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+
+    @media (min-width: 768px) {
+      .guidelines-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .guide-box h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .guide-box ul {
+      list-style-type: square;
+      padding-left: 20px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .guide-box ul li {
+      margin-bottom: 8px;
+    }
+
+    .highlight-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  
+  <header>
+    <h1>MedRx Pharmacy OS Pitch Deck</h1>
+    <p>A B2B selling presentation designed to migrate retail pharmacy chains from error-prone spreadsheets to cloud-based operations.</p>
+  </header>
+
+  <div class="deck-container">
+    
+    <!-- Slide Output Screen -->
+    <div id="slide-viewer" class="slide-viewer">
+      <!-- Content populated dynamically by JS -->
+    </div>
+
+    <!-- Interactive Navigation Controls -->
+    <div class="controls">
+      <button id="prev-btn" class="control-btn" onclick="prevSlide()">← Previous Slide</button>
+      <span id="slide-counter" style="font-weight: 700; color: var(--secondary);">Slide 1 of 10</span>
+      <button id="next-btn" class="control-btn" onclick="nextSlide()">Next Slide →</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Slide database structured according to prompt requirements
+  const slidesData = [
+    {
+      title: "MedRx: The Modern Pharmacy Operating System",
+      objective: "Establish MedRx as the ultimate operating system for pharmacies, replacing disconnected, manually managed Excel sheets.",
+      mainMessage: "Siloed management eats your retail margins. MedRx consolidates storefronts, real-time inventory, and billing into one intelligent, cloud-synced dashboard.",
+      layout: "Single Column Center-Aligned. Large title heading, visual product badge, clean minimal text, and high-impact subtitle.",
+      visualElements: "A high-fidelity central preview mockup showing the MedRx Admin Console, surrounded by floating cards displaying real-time metrics ('Storefront Active', 'Active Expiries: 0').",
+      content: `
+        <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+          <span style="background: rgba(16, 185, 129, 0.2); color: var(--accent); font-weight: 700; padding: 6px 16px; border-radius: 9999px; font-size: 14px; display: inline-block; margin-bottom: 20px;">
+            INTRODUCING MEDRX 2.0
+          </span>
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 48px; font-weight: 800; line-height: 1.15; color: white; margin-bottom: 24px;">
+            Ditch the Sheets. <br>Automate the Counter.
+          </h2>
+          <p style="font-size: 18px; color: #94a3b8; margin-bottom: 30px; line-height: 1.6;">
+            A unified Cloud OS linking digital customer storefronts directly to your batch stock counts and supplier payment ledger books.
+          </p>
+        </div>
+      `,
+      notes: "Welcome everyone. Today, we're talking about the backbone of your business—your inventory and customer sales channels. Many pharmacies are still operating in silos, using traditional desktop Excel spreadsheets that don't talk to their web portals. We are introducing MedRx, a modern operating system that resolves this mismatch automatically.",
+      designTips: "Use a rich gradient background from Deep Navy to Dark Slate to make the initial presentation entry look cinematic and high-end."
+    },
+    {
+      title: "Executive Summary: The Digital Pharmacy Paradigm Shift",
+      objective: "Showcase the immediate scope and business value of integrating storefronts directly with inventory ledgers.",
+      mainMessage: "Bridging the gap between customer checkouts and batch-level stock prevents loss and streamlines compliance.",
+      layout: "Two Column Layout. Left column defines the integrated business flow chart. Right column lists core operational impact statistics.",
+      visualElements: "A stylized connection map showing storefront cart checkouts directly triggering stock count deductions and invoice billing logs.",
+      content: `
+        <div class="slide-content-layout two-cols">
+          <div>
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 22px; color: var(--accent); margin-bottom: 16px;">The Unified Paradigm</h3>
+            <ul class="slide-bullets">
+              <li>Automatic stock deductions clear physical shelf count anomalies instantly.</li>
+              <li>Prescription verification queues link customer checkouts to pharmacist approvals.</li>
+              <li>Integrated supplier invoices keep financial ledgers audit-ready.</li>
+            </ul>
+          </div>
+          <div class="slide-visual-mockup">
+            <h4>OPERATIONAL SAVINGS</h4>
+            <div style="font-size: 48px; font-weight: 800; color: white; margin: 10px 0;">35%</div>
+            <p style="font-size: 13px; color: #94a3b8;">Increase in counter speed and purchase processing efficiency.</p>
+          </div>
+        </div>
+      `,
+      notes: "To sum up the opportunity, we are talking about saving up to 35% of operational time spent on manual audits. By linking storefront e-commerce directly to inventory records, checkouts update the database in real-time, removing manual double-entry steps.",
+      designTips: "Keep the font clean and use plenty of breathing room. The visual mockup card should use a transparent glassy border."
+    },
+    {
+      title: "Problem: Excel-Based Inventory is Bleeding Your Pharmacy Profits",
+      objective: "Clearly outline the cost, stress, and inaccuracies of managing inventory on legacy spreadsheets.",
+      mainMessage: "Spreadsheets are static, disconnected, and error-prone. They do not warn you of expiring batches or balance updates.",
+      layout: "Three-Column Grid. Each column represents a critical failure point of using Excel spreadsheets for pharmacy control.",
+      visualElements: "Icon grid displaying broken spreadsheets, trash bins representing expired drug losses, and alarm flags showing warning states.",
+      content: `
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px;">
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 20px; border-radius: 8px;">
+            <div style="font-size: 28px; margin-bottom: 10px;">📉</div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: #f87171; margin-bottom: 8px;">0% Expiry Sync</h4>
+            <p style="font-size: 13px; color: #cbd5e1;">Excel cannot automatically read batch dates or highlight drugs set to expire in 30 days, resulting in waste.</p>
+          </div>
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 20px; border-radius: 8px;">
+            <div style="font-size: 28px; margin-bottom: 10px;">❌</div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: #f87171; margin-bottom: 8px;">No Storefront Integration</h4>
+            <p style="font-size: 13px; color: #cbd5e1;">A customer orders online, but because Excel is not connected, the storefront lists out-of-stock items, hurting trust.</p>
+          </div>
+          <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.2); padding: 20px; border-radius: 8px;">
+            <div style="font-size: 28px; margin-bottom: 10px;">⚠️</div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: #f87171; margin-bottom: 8px;">Manual Data Entry Error</h4>
+            <p style="font-size: 13px; color: #cbd5e1;">Typing costs and numbers manually into sheets leads to balance discrepancies with suppliers.</p>
+          </div>
+        </div>
+      `,
+      notes: "Let's be frank—Excel is a spreadsheet, not an operating system. If you manage stock on Excel, you are running blind. If an item expires on shelf, Excel will not notify you. If an online user orders something that is already out of stock, they experience friction. MedRx replaces this spreadsheet vulnerability with automated APIs.",
+      designTips: "Use subtle red accents to convey risk and friction, without cluttering the slide."
+    },
+    {
+      title: "Analysis & Insights: The Real Cost of Legacy Tracking",
+      objective: "Quantify the average financial leakage experienced by mid-sized pharmacies using spreadsheets.",
+      mainMessage: "Standard pharmacies lose up to 18% of their annual margins to expired products and audit overhead.",
+      layout: "Split screen. Left column displays a breakdown list of financial leakage. Right column shows a comparative bar chart.",
+      visualElements: "A clean CSS bar chart visualizing average annual losses: Expiry Losses ($12K), Audit overhead ($9K), Lost online sales ($6K) total $27K lost.",
+      content: `
+        <div class="slide-content-layout two-cols">
+          <div>
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 22px; color: var(--accent); margin-bottom: 16px;">The Audit Findings</h3>
+            <ul class="slide-bullets">
+              <li><strong>Expiry Leakage</strong>: Average $1,000/month discarded in expired batches.</li>
+              <li><strong>Mismatched Stock</strong>: 12% of customer orders experience out-of-stock delays.</li>
+              <li><strong>Supplier Discrepancies</strong>: Count errors lead to overpaying bills.</li>
+            </ul>
+          </div>
+          <div class="slide-visual-mockup" style="background: rgba(30, 41, 59, 0.5);">
+            <h4 style="color: white;">ANNUAL LOSS COMPARISON</h4>
+            <div style="display: flex; justify-content: space-around; width: 100%; height: 120px; align-items: flex-end; margin-top: 20px;">
+              <div style="width: 30px; height: 100px; background: #ef4444; border-radius: 4px; position: relative;">
+                <span style="position: absolute; top: -20px; font-size: 10px; left: 50%; transform: translateX(-50%);">Excel</span>
+              </div>
+              <div style="width: 30px; height: 15px; background: var(--accent); border-radius: 4px; position: relative;">
+                <span style="position: absolute; top: -20px; font-size: 10px; left: 50%; transform: translateX(-50%);">MedRx</span>
+              </div>
+            </div>
+            <p style="font-size: 11px; color: #94a3b8; margin-top: 10px;">Excel process leakages ($27K) vs. MedRx automated system ($2.4K).</p>
+          </div>
+        </div>
+      `,
+      notes: "When we look at the numbers, spreadsheet management isn't free—it is incredibly costly. Over $27,000 is lost annually to human errors and manual batch auditing. MedRx automates the checks, reducing losses to near zero.",
+      designTips: "Use high contrast chart colors: bright warning red for legacy processes and vibrant emerald green for MedRx."
+    },
+    {
+      title: "Proposed Solution: The MedRx Integrated Cloud Platform",
+      objective: "Introduce MedRx as the automated, cloud-based platform for pharmacy management.",
+      mainMessage: "A single database, dual interfaces: a responsive digital storefront for patients, and a command center for pharmacists.",
+      layout: "Two Column Layout with clean interface preview columns.",
+      visualElements: "Mockup previews displaying the responsive Customer storefront catalog on a mobile frame, and the batch tracking tables on a browser mockup screen.",
+      content: `
+        <div class="slide-content-layout two-cols">
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 24px; border-radius: 12px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🛒</div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: var(--accent); margin-bottom: 8px;">1. Customer Storefront</h4>
+            <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">Mobile web shopping catalog where patients search drugs, submit prescriptions, check delivery status, and order to their coordinates.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 24px; border-radius: 12px;">
+            <div style="font-size: 24px; margin-bottom: 8px;">🔒</div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: var(--accent); margin-bottom: 8px;">2. Admin Command Dashboard</h4>
+            <p style="font-size: 13px; color: #cbd5e1; line-height: 1.5;">Central interface showing sales stats, expiry warnings, automated purchase orders, and supplier balance ledgers.</p>
+          </div>
+        </div>
+      `,
+      notes: "The solution is MedRx. It consists of two seamlessly connected modules: a modern, customer-facing storefront, and an advanced admin console. When a customer orders a product, MedRx instantly registers the purchase, updates the batch counts, and alerts the packaging team.",
+      designTips: "Keep text blocks balanced and use clear spacing to make it easy to scan."
+    },
+    {
+      title: "Implementation Plan: Zero-Downtime Pharmacy Transition",
+      objective: "Map out a clear, structured path for migrating drug lists from Excel to MedRx without pausing business operations.",
+      mainMessage: "A structured, 4-phase rollout plan guarantees a safe data transition in less than 14 days.",
+      layout: "Timeline Flowchart. Four horizontal phases representing the implementation schedule.",
+      visualElements: "Visual milestone chain displaying: Phase 1 (CSV Mapping), Phase 2 (Staff Onboarding), Phase 3 (Storefront Launch), and Phase 4 (Unified Go-Live).",
+      content: `
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; text-align: center;">
+          <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-weight: 800; color: var(--accent); font-size: 18px; margin-bottom: 6px;">DAYS 1-3</div>
+            <h5 style="font-family: 'Outfit', sans-serif; margin-bottom: 6px;">CSV Import</h5>
+            <p style="font-size: 12px; color: #94a3b8;">Export your drug sheet to CSV and map it directly to our Prisma database schema.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-weight: 800; color: var(--accent); font-size: 18px; margin-bottom: 6px;">DAYS 4-6</div>
+            <h5 style="font-family: 'Outfit', sans-serif; margin-bottom: 6px;">Staff Sync</h5>
+            <p style="font-size: 12px; color: #94a3b8;">Create staff accounts and train checkout agents on processing online orders.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-weight: 800; color: var(--accent); font-size: 18px; margin-bottom: 6px;">DAYS 7-10</div>
+            <h5 style="font-family: 'Outfit', sans-serif; margin-bottom: 6px;">Storefront Setup</h5>
+            <p style="font-size: 12px; color: #94a3b8;">Customize your digital storefront and configure coordinates for courier routes.</p>
+          </div>
+          <div style="background: rgba(255,255,255,0.03); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);">
+            <div style="font-weight: 800; color: var(--accent); font-size: 18px; margin-bottom: 6px;">DAY 14</div>
+            <h5 style="font-family: 'Outfit', sans-serif; margin-bottom: 6px;">Go-Live</h5>
+            <p style="font-size: 12px; color: #94a3b8;">Switch off legacy spreadsheets and start processing automated orders.</p>
+          </div>
+        </div>
+      `,
+      notes: "One of the main concerns of pharmacy owners is downtime. We've designed a 14-day migration workflow that starts by importing your Excel sheets directly into our database. The system runs in parallel with your legacy process until the go-live day, ensuring a smooth transition.",
+      designTips: "Use a clean progress track line behind the step cards to emphasize the sequence."
+    },
+    {
+      title: "Financial/Impact Analysis: Shift Profit Drain to Efficiency",
+      objective: "Demonstrate the return on investment of migrating to the MedRx platform.",
+      mainMessage: "Within 90 days, MedRx reduces batch expiry losses to 0% and increases average order volume by 28%.",
+      layout: "Two Column Layout. Left column breaks down profitability growth metrics. Right column displays a metrics card.",
+      visualElements: "Key value metric callouts: '0% Expiry Losses', '+28% Storefront Orders', and '3.2x ROI in Year 1'.",
+      content: `
+        <div class="slide-content-layout two-cols">
+          <div>
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 22px; color: var(--accent); margin-bottom: 16px;">The ROI Breakdown</h3>
+            <ul class="slide-bullets">
+              <li><strong>Zero Expiry Waste</strong>: Real-time warnings allow you to sell near-expiry drugs before they spoil.</li>
+              <li><strong>Automated Invoices</strong>: Restock calculations prevent overpaying suppliers.</li>
+              <li><strong>Expanded Storefront Reach</strong>: Open a digital sales channel that isn't restricted by store hours.</li>
+            </ul>
+          </div>
+          <div class="slide-visual-mockup" style="background: linear-gradient(135deg, var(--secondary) 0%, rgba(13,148,136,0.2) 100%); border: 1px solid var(--primary);">
+            <h4 style="color: white; letter-spacing: 0.05em; font-size: 12px;">INVESTMENT PAYBACK</h4>
+            <div style="font-size: 64px; font-weight: 800; color: white; margin: 15px 0; font-family: 'Outfit', sans-serif;">90 Days</div>
+            <p style="font-size: 13px; color: #cbd5e1; max-width: 250px;">Typical break-even point from saved stock waste and increased orders.</p>
+          </div>
+        </div>
+      `,
+      notes: "The financial impact is clear. By preventing expiry losses and expanding your reach with an online storefront, MedRx pays for itself within the first 90 days of launch.",
+      designTips: "Make the '90 Days' value block highly prominent using strong, clear typography."
+    },
+    {
+      title: "Risks & Mitigations: High Security & Reliability",
+      objective: "Address technical questions regarding internet outages, security, and backup integrity.",
+      mainMessage: "Local-first cloud synching and daily encrypted backups ensure operations stay online 24/7.",
+      layout: "Two-by-Two Grid. Pairs common client risks directly with our built-in mitigations.",
+      visualElements: "Technical badges showing secure lock symbols and offline sync checks.",
+      content: `
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+          <div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: var(--accent); margin-bottom: 6px;">Risk: Internet Outages</h4>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">Mitigation: Offline cache structures. The storefront queue holds checkout items locally and syncs with the server as soon as connectivity resumes.</p>
+          </div>
+          <div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: var(--accent); margin-bottom: 6px;">Risk: Data Theft</h4>
+            <p style="font-size: 13px; color: #94a3b8; line-height: 1.5;">Mitigation: High-grade encryption. Patient profiles, prescription details, and financial ledgers are encrypted in transit and at rest.</p>
+          </div>
+        </div>
+      `,
+      notes: "We understand that security and uptime are critical. MedRx utilizes offline-first caching for your counters. If your internet drops, checkouts are saved locally and synced automatically once connection is restored.",
+      designTips: "Use clear visual borders to separate risk sections from mitigation descriptions."
+    },
+    {
+      title: "Conclusion: The Operating System of Tomorrow, Today",
+      objective: "Consolidate the pitch and deliver a clear call-to-action to begin migrating from Excel.",
+      mainMessage: "The future of retail pharmacy is integrated, automated, and digital. Move away from spreadsheets today.",
+      layout: "Single Column Center-Aligned. Summary text, clear next steps, and a large call-to-action button layout.",
+      visualElements: "A clean visual card displaying the onboarding steps and next actions.",
+      content: `
+        <div style="text-align: center; max-width: 700px; margin: 0 auto;">
+          <h2 style="font-family: 'Outfit', sans-serif; font-size: 38px; color: white; margin-bottom: 16px;">Ready to Elevate Your Operations?</h2>
+          <p style="font-size: 16px; color: #cbd5e1; margin-bottom: 32px; line-height: 1.6;">
+            Migrate from error-prone spreadsheets to automated, cloud-based pharmacy operations. 
+          </p>
+          <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); padding: 20px; border-radius: 12px; display: inline-flex; gap: 30px; text-align: left; align-items: center;">
+            <div>
+              <div style="font-size: 11px; color: var(--accent); font-weight: 800; text-transform: uppercase;">UP NEXT</div>
+              <div style="font-size: 16px; font-weight: 700; color: white; margin-top: 2px;">Schedule Your Free Excel Audit</div>
+            </div>
+            <div style="background: var(--accent); color: var(--secondary); font-weight: 700; padding: 10px 20px; border-radius: 6px; font-size: 14px;">
+              Get Started
+            </div>
+          </div>
+        </div>
+      `,
+      notes: "In conclusion, sticking with manual spreadsheets is costing you time and money. Moving to MedRx modernizes your patient experience and automates back-office tasks. Let's schedule your free Excel database audit and plan your migration.",
+      designTips: "Make the call-to-action button high-contrast so it stands out clearly."
+    },
+    {
+      title: "Q&A Slide: Empower Your Counter. Scale Your Pharmacy.",
+      objective: "Provide a clean contact slide to host Q&A discussion.",
+      mainMessage: "Let's automate your pharmacy operations together.",
+      layout: "Two Column Grid. Left side highlights contact info and audit channels. Right side prompts for questions.",
+      visualElements: "Interactive customer support links, address markers, and phone lines.",
+      content: `
+        <div class="slide-content-layout two-cols" style="align-items: center;">
+          <div>
+            <h2 style="font-family: 'Outfit', sans-serif; font-size: 32px; color: white; margin-bottom: 10px;">Thank You</h2>
+            <p style="font-size: 14px; color: #94a3b8; margin-bottom: 24px;">We are ready to take your questions.</p>
+            <div style="font-size: 14px; color: #cbd5e1; display: flex; flex-direction: column; gap: 8px;">
+              <div>📧 pitch@medrx.pharmacy</div>
+              <div>📞 +234 (0) 800-MED-RX-OS</div>
+              <div>🌐 medrx.pharmacy/onboarding</div>
+            </div>
+          </div>
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); padding: 30px; border-radius: 12px; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 12px;">💬</div>
+            <h4 style="font-family: 'Outfit', sans-serif; color: var(--accent); margin-bottom: 6px;">Open Discussion</h4>
+            <p style="font-size: 12px; color: #cbd5e1;">Reviewing Excel sheet migrations, pricing structures, and custom developer requests.</p>
+          </div>
+        </div>
+      `,
+      notes: "Thank you for your time. I'd love to open the floor to any questions you have about data migration, security protocols, or operational rollouts.",
+      designTips: "Keep the design minimal, leaving plenty of space on the slide to keep focus on the conversation."
+    }
+  ];
+
+  let currentIdx = 0;
+
+  function updateSlide() {
+    const slide = slidesData[currentIdx];
+    
+    // Update Slide Viewer Content
+    const viewer = document.getElementById('slide-viewer');
+    viewer.innerHTML = `
+      <div class="slide-header">
+        <div class="slide-logo">💊 MedRx <span>OS</span></div>
+        <div class="slide-num">SLIDE ${currentIdx + 1} OF ${slidesData.length}</div>
+      </div>
+      <div class="slide-body">
+        <h3 class="slide-title">${slide.title}</h3>
+        ${slide.content}
+      </div>
+      <div class="slide-footer">
+        <div>B2B Pitch Platform</div>
+        <div>CONFIDENTIAL - FOR INTERNAL PHARMACY REVIEW ONLY</div>
+      </div>
+    `;
+
+
+
+    // Update Counter
+    document.getElementById('slide-counter').innerText = `Slide ${currentIdx + 1} of ${slidesData.length}`;
+
+    // Update Buttons State
+    document.getElementById('prev-btn').disabled = currentIdx === 0;
+    document.getElementById('next-btn').disabled = currentIdx === slidesData.length - 1;
+  }
+
+  function nextSlide() {
+    if (currentIdx < slidesData.length - 1) {
+      currentIdx++;
+      updateSlide();
+    }
+  }
+
+  function prevSlide() {
+    if (currentIdx > 0) {
+      currentIdx--;
+      updateSlide();
+    }
+  }
+
+  // Initialize
+  updateSlide();
+</script>
+
+</body>
+</html>
